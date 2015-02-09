@@ -1,12 +1,9 @@
-import kafka.admin.AdminUtils;
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServer;
-import org.I0Itec.zkclient.ZkClient;
 import org.springframework.context.SmartLifecycle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,30 +114,30 @@ public class EmbeddedKafkaCluster implements SmartLifecycle {
     Properties prop = new Properties();
     InputStream input = null;
 
-    try {
-      System.out.println("Creating topics");
-      input=EmbeddedKafkaCluster.class.getClassLoader().getResourceAsStream("topic.properties");
-
-      // load a properties file
-      prop.load(input);
-      ZkClient zkClient = new ZkClient(zookeeper.getConnection());
-      for(String key : prop.stringPropertyNames()) {
-        String value = prop.getProperty(key);
-        AdminUtils.createTopic(zkClient, key, Integer.parseInt(value),2, new Properties());
-        System.out.println("Topic created "+key);
-      }
-
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    } finally {
-      if (input != null) {
-        try {
-          input.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    }
+//    try {
+//      System.out.println("Creating topics");
+//      input=EmbeddedKafkaCluster.class.getClassLoader().getResourceAsStream("topic.properties");
+//
+//      // load a properties file
+//      prop.load(input);
+//      ZkClient zkClient = new ZkClient(zookeeper.getConnection());
+//      for(String key : prop.stringPropertyNames()) {
+//        String value = prop.getProperty(key);
+//       // AdminUtils.createTopic(zkClient, key, Integer.parseInt(value),1, new Properties());
+//        System.out.println("Topic created "+key);
+//      }
+//
+//    } catch (Exception ex) {
+//      ex.printStackTrace();
+//    } finally {
+//      if (input != null) {
+//        try {
+//          input.close();
+//        } catch (IOException e) {
+//          e.printStackTrace();
+//        }
+//      }
+//    }
   }
 
   private KafkaServer startBroker(Properties props) {
